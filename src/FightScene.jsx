@@ -105,14 +105,15 @@ export default function FightScene({ sectionRef }) {
 
     const rect = sectionRef.current.getBoundingClientRect();
     const scrollable = Math.max(1, rect.height - window.innerHeight);
-    const progress = clamp(-rect.top / scrollable);
+    const isMobile = window.innerWidth <= 600;
+    const progress = clamp((-rect.top / scrollable) * (isMobile ? 1.28 : 1));
     progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 6, delta);
     const p = progressRef.current;
 
-    const entrance = smooth(range(p, 0, 0.32));
-    const impact = Math.sin(range(p, 0.3, 0.64) * Math.PI);
-    const exit = smooth(range(p, 0.72, 1));
-    const beltIn = smooth(range(p, 0.43, 0.7));
+    const entrance = smooth(range(p, 0, isMobile ? 0.22 : 0.32));
+    const impact = Math.sin(range(p, isMobile ? 0.2 : 0.3, isMobile ? 0.5 : 0.64) * Math.PI);
+    const exit = smooth(range(p, isMobile ? 0.68 : 0.72, 1));
+    const beltIn = smooth(range(p, isMobile ? 0.34 : 0.43, isMobile ? 0.6 : 0.7));
 
     leftGlove.current.position.set(
       THREE.MathUtils.lerp(-6.2, -1.28, entrance) - exit * 2.2,
@@ -149,6 +150,7 @@ export default function FightScene({ sectionRef }) {
 
     sceneRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.22) * 0.035;
     sceneRef.current.rotation.x = Math.cos(state.clock.elapsedTime * 0.18) * 0.018;
+    sceneRef.current.scale.setScalar(isMobile ? 0.82 : 1);
   });
 
   return (

@@ -618,6 +618,67 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -2px); }
   .not-found { min-height: 76svh; padding-top: 125px; }.not-found h1 { font-size: 70px; }.not-found > div { align-items: stretch; flex-direction: column; }.not-found .button { width: 100%; }
 }
 
+/* Mobile media: preserve complete photographs and shorten scroll narratives. */
+@media (max-width: 600px) {
+  .combat-visual { height: 120svh; }
+  .combat-visual-sticky { height: 100svh; min-height: 0; }
+  .belt-journey { height: 185svh; }
+  .belt-journey-sticky { height: 100svh; min-height: 0; padding-top: 82px; padding-bottom: 14px; gap: 10px; }
+  .belt-copy h2 { margin: 12px 0; font-size: 48px; }
+  .belt-active-copy { min-height: 80px; }
+  .belt-active-copy p { margin-top: 7px; line-height: 1.45; }
+  .belt-stage { height: 220px; }
+
+  .photo-frame { aspect-ratio: auto; clip-path: polygon(3% 0, 100% 0, 100% 97%, 97% 100%, 0 100%, 0 3%); }
+  .photo-frame picture,
+  .boxing-hero-photo picture,
+  .boxing-purpose-photo picture,
+  .coach-card picture,
+  .bjj-hero-photo picture,
+  .bjj-professor-photo picture,
+  .kick-hero-photo picture,
+  .kick-coach-photo picture,
+  .mma-hero-photo picture,
+  .mma-coach-photo picture { display: block; width: 100%; height: auto; }
+
+  .photo-frame img,
+  .founder-photo img,
+  .boxing-hero-photo img,
+  .boxing-purpose-photo img,
+  .coach-card img,
+  .bjj-hero-photo img,
+  .bjj-professor-photo img,
+  .kick-hero-photo img,
+  .kick-coach-photo img,
+  .mma-hero-photo img,
+  .mma-coach-photo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+  }
+
+  .mma-hero-photo picture { clip-path: polygon(7% 0, 93% 0, 100% 7%, 100% 93%, 93% 100%, 7% 100%, 0 93%, 0 7%); }
+  .combo-visual { min-height: 0; aspect-ratio: 1; }
+  .combo-visual picture { display: block; width: 100%; height: 100%; }
+  .combo-visual img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+  .mma-octagon { min-height: 0; aspect-ratio: 1; }
+  .mma-octagon-image img { object-fit: contain; object-position: center; }
+
+  .hero-photo:hover img,
+  .founder-photo:hover img,
+  .boxing-hero-photo:hover img,
+  .coach-card:hover img,
+  .bjj-hero-photo:hover img,
+  .bjj-professor-photo:hover img,
+  .kick-hero-photo:hover img,
+  .kick-coach-photo:hover img,
+  .mma-hero-photo:hover img,
+  .mma-coach-photo:hover img { transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
   [data-reveal] { opacity: 1; transform: none; }

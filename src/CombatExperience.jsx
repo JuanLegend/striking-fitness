@@ -2,10 +2,12 @@ import { Canvas } from '@react-three/fiber';
 import FightScene from './FightScene.jsx';
 
 export default function CombatExperience({ sectionRef }) {
+  const isMobile = window.matchMedia('(max-width: 600px)').matches;
+
   return (
     <Canvas
-      dpr={[1, 1.5]}
-      camera={{ position: [0, 0, 8.3], fov: 42 }}
+      dpr={isMobile ? [1, 1.2] : [1, 1.5]}
+      camera={{ position: [0, 0, isMobile ? 10.6 : 8.3], fov: isMobile ? 48 : 42 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       shadows
     >
