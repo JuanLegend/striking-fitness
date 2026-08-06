@@ -546,6 +546,20 @@ function BeltJourney() {
       return rect.top <= window.innerHeight * 0.16 && rect.bottom >= window.innerHeight * 0.76;
     };
 
+    const isEntering = (direction) => {
+      const rect = section.getBoundingClientRect();
+      return direction > 0
+        ? rect.top > window.innerHeight * 0.16 && rect.top <= window.innerHeight * 0.92
+        : rect.bottom < window.innerHeight * 0.76 && rect.bottom >= window.innerHeight * 0.08;
+    };
+
+    const alignJourney = (direction) => {
+      const edgeBelt = direction > 0 ? 0 : beltLevels.length - 1;
+      activeBeltRef.current = edgeBelt;
+      setActiveBelt(edgeBelt);
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
     const canMove = (direction) => direction > 0
       ? activeBeltRef.current < beltLevels.length - 1
       : activeBeltRef.current > 0;
@@ -559,8 +573,19 @@ function BeltJourney() {
     };
 
     const onWheel = (event) => {
-      if (!isActive() || Math.abs(event.deltaY) < 12) return;
+      if (Math.abs(event.deltaY) < 12) return;
       const direction = event.deltaY > 0 ? 1 : -1;
+      if (isEntering(direction)) {
+        event.preventDefault();
+        if (!wheelLocked) {
+          alignJourney(direction);
+          wheelLocked = true;
+          window.clearTimeout(wheelTimer);
+          wheelTimer = window.setTimeout(() => { wheelLocked = false; }, 620);
+        }
+        return;
+      }
+      if (!isActive()) return;
       if (!canMove(direction)) return;
       event.preventDefault();
       if (wheelLocked) return;
@@ -578,7 +603,7 @@ function BeltJourney() {
     };
 
     const onTouchMove = (event) => {
-      if (touchStartY === null || !isActive() || event.touches.length !== 1) return;
+      if (touchStartY === null || event.touches.length !== 1) return;
       if (touchCaptured) {
         event.preventDefault();
         return;
@@ -586,6 +611,13 @@ function BeltJourney() {
       const distance = touchStartY - event.touches[0].clientY;
       if (Math.abs(distance) < 32) return;
       const direction = distance > 0 ? 1 : -1;
+      if (isEntering(direction)) {
+        event.preventDefault();
+        alignJourney(direction);
+        touchCaptured = true;
+        return;
+      }
+      if (!isActive()) return;
       if (!canMove(direction)) return;
       event.preventDefault();
       touchCaptured = move(direction);
@@ -603,19 +635,19 @@ function BeltJourney() {
       move(direction);
     };
 
-    section.addEventListener('wheel', onWheel, { passive: false });
-    section.addEventListener('touchstart', onTouchStart, { passive: true });
-    section.addEventListener('touchmove', onTouchMove, { passive: false });
-    section.addEventListener('touchend', onTouchEnd, { passive: true });
-    section.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', onTouchEnd, { passive: true });
     section.addEventListener('keydown', onKeyDown);
     return () => {
       window.clearTimeout(wheelTimer);
-      section.removeEventListener('wheel', onWheel);
-      section.removeEventListener('touchstart', onTouchStart);
-      section.removeEventListener('touchmove', onTouchMove);
-      section.removeEventListener('touchend', onTouchEnd);
-      section.removeEventListener('touchcancel', onTouchEnd);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('touchcancel', onTouchEnd);
       section.removeEventListener('keydown', onKeyDown);
     };
   }, []);
