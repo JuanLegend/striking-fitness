@@ -1,0 +1,19 @@
+import { Canvas } from '@react-three/fiber';
+import FightScene from './FightScene.jsx';
+
+export default function CombatExperience({ sectionRef }) {
+  return (
+    <Canvas
+      dpr={[1, 1.5]}
+      camera={{ position: [0, 0, 8.3], fov: 42 }}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      shadows
+    >
+      <ambientLight intensity={1.35} />
+      <directionalLight position={[4, 6, 7]} intensity={3.8} color="#ffffff" castShadow />
+      <pointLight position={[-5, 1, 4]} intensity={22} color="#e63d24" distance={11} />
+      <pointLight position={[5, -2, 3]} intensity={16} color="#5d89bd" distance={10} />
+      <FightScene sectionRef={sectionRef} />
+    </Canvas>
+  );
+}

@@ -1,0 +1,17 @@
+{
+  "redirects": [
+    { "source": "/academia-de-boxeo-cali", "destination": "/boxeo", "permanent": true },
+    { "source": "/academia-de-boxeo-cali/", "destination": "/boxeo", "permanent": true },
+    { "source": "/jiu-jitsu-brasileno-bjj-brazilian-jiu-jitsu-cali", "destination": "/brazilian-jiu-jitsu", "permanent": true },
+    { "source": "/jiu-jitsu-brasileno-bjj-brazilian-jiu-jitsu-cali/", "destination": "/brazilian-jiu-jitsu", "permanent": true },
+    { "source": "/academia-kick-boxing-cali", "destination": "/kick-boxing", "permanent": true },
+    { "source": "/academia-kick-boxing-cali/", "destination": "/kick-boxing", "permanent": true },
+    { "source": "/escuela-de-mma-o-artes-marciales-mixtas-cali", "destination": "/mma", "permanent": true },
+    { "source": "/escuela-de-mma-o-artes-marciales-mixtas-cali/", "destination": "/mma", "permanent": true },
+    { "source": "/sedes-y-contacto", "destination": "/sedes-contacto", "permanent": true },
+    { "source": "/sedes-y-contacto/", "destination": "/sedes-contacto", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
