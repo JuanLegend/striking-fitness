@@ -87,7 +87,7 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -2px); }
 .hero-bottom i { color: var(--acid); font-style: normal; }
 
 /* 3D visual */
-.combat-visual { position: relative; height: 130vh; background: #030303; }
+.combat-visual { position: relative; height: 118svh; background: #030303; }
 .combat-visual-sticky { position: sticky; top: 0; height: 100vh; min-height: 580px; overflow: hidden; }
 .combat-visual-sticky::before { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(circle at center, transparent 18%, rgba(0,0,0,.08) 58%, rgba(0,0,0,.62) 100%); }
 .combat-canvas { position: absolute; inset: 0; z-index: 1; }
@@ -284,10 +284,11 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -2px); }
 .bjj-benefit-grid h3 { margin: 68px 0 13px; font-size: clamp(26px, 2.2vw, 36px); line-height: 1; }
 .bjj-benefit-grid p { margin: 0; color: #66635c; font-size: 11px; line-height: 1.72; }
 
-.belt-journey { position: relative; height: 330vh; background: linear-gradient(120deg, #090a10, #11162e 62%, #080808); }
-.belt-journey-sticky { position: sticky; top: 0; min-height: 100vh; padding-top: 128px; padding-bottom: 60px; overflow: hidden; display: grid; grid-template-columns: minmax(380px, .8fr) minmax(500px, 1.2fr); grid-template-rows: 1fr auto; gap: 24px 7vw; align-items: center; }
+.belt-journey { position: relative; height: 100svh; background: linear-gradient(120deg, #090a10, #11162e 62%, #080808); }
+.belt-journey-sticky { position: sticky; top: 0; height: 100svh; min-height: 100vh; padding-top: 128px; padding-bottom: 60px; overflow: hidden; display: grid; grid-template-columns: minmax(380px, .8fr) minmax(500px, 1.2fr); grid-template-rows: 1fr auto; gap: 24px 7vw; align-items: center; }
 .belt-copy { position: relative; z-index: 3; }
 .belt-step { margin: 28px 0 36px; color: #777d93; font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.belt-scroll-hint { width: fit-content; margin: -25px 0 31px; padding: 7px 10px; color: #aeb9df; border: 1px solid rgba(103,134,237,.35); font-size: 8px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .belt-copy h2 { margin: 0 0 38px; font-size: clamp(66px, 6.2vw, 95px); line-height: .83; letter-spacing: -.04em; }
 .belt-copy h2 em { color: var(--bjj-blue); font-style: italic; }
 .belt-active-copy { min-height: 115px; padding-left: 18px; border-left: 2px solid var(--bjj-blue); }
@@ -583,7 +584,7 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -2px); }
   .boxing-final-cta { padding-top: 72px; padding-bottom: 76px; grid-template-columns: 1fr; gap: 38px; }.boxing-final-cta h2 { font-size: 59px; }.boxing-final-cta .button { width: 100%; }
   .bjj-hero { min-height: auto; padding-top: 120px; padding-bottom: 68px; grid-template-columns: 1fr; gap: 58px; }.bjj-hero::before { left: 0; top: 55%; opacity: .08; }.bjj-hero h1 { font-size: clamp(74px, 21vw, 98px); }.bjj-hero-actions { flex-direction: column; align-items: stretch; }.bjj-hero-actions .button { width: 100%; }.bjj-hero-actions .underlink { align-self: flex-start; }.bjj-hero-facts { margin-top: 36px; }.bjj-hero-photo { width: calc(100% - 14px); justify-self: center; }
   .bjj-intro { padding-top: 76px; padding-bottom: 82px; grid-template-columns: 1fr; gap: 42px; }.bjj-intro-heading h2 { font-size: 61px; }.bjj-belts-photo { min-height: 390px; }.bjj-benefit-grid { grid-template-columns: 1fr; }.bjj-benefit-grid article { min-height: 185px; }.bjj-benefit-grid h3 { margin-top: 45px; }
-  .belt-journey { height: 300vh; }.belt-journey-sticky { padding-top: 100px; padding-bottom: 30px; grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; gap: 16px; align-items: start; }.belt-copy h2 { margin: 22px 0; font-size: 56px; }.belt-step { display: none; }.belt-active-copy { min-height: 92px; }.belt-active-copy strong { font-size: 30px; }.belt-active-copy p { margin-top: 10px; font-size: 11px; }.belt-disclaimer { display: none; }.belt-stage { height: 280px; }.belt-object { width: 88vw; height: 58px; --belt-shift: calc(var(--belt-distance) * 48px); }.belt-object span { right: 23px; width: 78px; }.belt-object b { font-size: 11px; }.belt-controls { grid-template-columns: repeat(5, 1fr); }.belt-controls button { min-width: 0; padding: 11px 3px; font-size: 0; }.belt-controls button i { width: 21px; height: 6px; }
+  .belt-journey { height: 100svh; }.belt-journey-sticky { padding-top: 100px; padding-bottom: 30px; grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; gap: 16px; align-items: start; }.belt-copy h2 { margin: 22px 0; font-size: 56px; }.belt-step { display: none; }.belt-scroll-hint { margin: -12px 0 15px; }.belt-active-copy { min-height: 92px; }.belt-active-copy strong { font-size: 30px; }.belt-active-copy p { margin-top: 10px; font-size: 11px; }.belt-disclaimer { display: none; }.belt-stage { height: 280px; }.belt-object { width: 88vw; height: 58px; --belt-shift: calc(var(--belt-distance) * 48px); }.belt-object span { right: 23px; width: 78px; }.belt-object b { font-size: 11px; }.belt-controls { grid-template-columns: repeat(5, 1fr); }.belt-controls button { min-width: 0; padding: 11px 3px; font-size: 0; }.belt-controls button i { width: 21px; height: 6px; }
   .bjj-professor { padding-top: 80px; padding-bottom: 86px; grid-template-columns: 1fr; gap: 58px; }.bjj-professor-photo { width: calc(100% - 8px); }.bjj-professor-photo img { aspect-ratio: .88; }.professor-years { right: -8px; width: 105px; }.bjj-professor-copy h2 { font-size: 61px; }.professor-principle p { font-size: 18px; }.bjj-professor .button { width: 100%; }
   .bjj-schedule { padding-top: 76px; padding-bottom: 80px; grid-template-columns: 1fr; gap: 45px; }.bjj-schedule h2 { font-size: 60px; }.bjj-class-card { padding: 25px; }.bjj-class-card time { font-size: 74px; }
   .bjj-final-cta { padding-top: 72px; padding-bottom: 78px; }.bjj-final-cta h2 { font-size: 59px; }.bjj-final-cta .button { width: 100%; }
@@ -620,9 +621,9 @@ a:hover .arrow, button:hover .arrow { transform: translate(3px, -2px); }
 
 /* Mobile media: preserve complete photographs and shorten scroll narratives. */
 @media (max-width: 600px) {
-  .combat-visual { height: 120svh; }
+  .combat-visual { height: 112svh; }
   .combat-visual-sticky { height: 100svh; min-height: 0; }
-  .belt-journey { height: 185svh; }
+  .belt-journey { height: 100svh; }
   .belt-journey-sticky { height: 100svh; min-height: 0; padding-top: 82px; padding-bottom: 14px; gap: 10px; }
   .belt-copy h2 { margin: 12px 0; font-size: 48px; }
   .belt-active-copy { min-height: 80px; }

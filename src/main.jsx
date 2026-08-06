@@ -530,38 +530,108 @@ const beltLevels = [
 function BeltJourney() {
   const sectionRef = useRef(null);
   const [activeBelt, setActiveBelt] = useState(0);
+  const activeBeltRef = useRef(0);
 
   useEffect(() => {
-    const updateFromScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const travel = Math.max(1, rect.height - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, -rect.top / travel));
-      setActiveBelt(Math.round(progress * (beltLevels.length - 1)));
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    let wheelLocked = false;
+    let wheelTimer;
+    let touchStartY = null;
+    let touchCaptured = false;
+
+    const isActive = () => {
+      const rect = section.getBoundingClientRect();
+      return rect.top <= window.innerHeight * 0.16 && rect.bottom >= window.innerHeight * 0.76;
     };
-    updateFromScroll();
-    window.addEventListener('scroll', updateFromScroll, { passive: true });
-    window.addEventListener('resize', updateFromScroll);
+
+    const canMove = (direction) => direction > 0
+      ? activeBeltRef.current < beltLevels.length - 1
+      : activeBeltRef.current > 0;
+
+    const move = (direction) => {
+      if (!canMove(direction)) return false;
+      const next = Math.min(beltLevels.length - 1, Math.max(0, activeBeltRef.current + direction));
+      activeBeltRef.current = next;
+      setActiveBelt(next);
+      return true;
+    };
+
+    const onWheel = (event) => {
+      if (!isActive() || Math.abs(event.deltaY) < 12) return;
+      const direction = event.deltaY > 0 ? 1 : -1;
+      if (!canMove(direction)) return;
+      event.preventDefault();
+      if (wheelLocked) return;
+      if (move(direction)) {
+        wheelLocked = true;
+        window.clearTimeout(wheelTimer);
+        wheelTimer = window.setTimeout(() => { wheelLocked = false; }, 620);
+      }
+    };
+
+    const onTouchStart = (event) => {
+      if (event.touches.length !== 1) return;
+      touchStartY = event.touches[0].clientY;
+      touchCaptured = false;
+    };
+
+    const onTouchMove = (event) => {
+      if (touchStartY === null || !isActive() || event.touches.length !== 1) return;
+      if (touchCaptured) {
+        event.preventDefault();
+        return;
+      }
+      const distance = touchStartY - event.touches[0].clientY;
+      if (Math.abs(distance) < 32) return;
+      const direction = distance > 0 ? 1 : -1;
+      if (!canMove(direction)) return;
+      event.preventDefault();
+      touchCaptured = move(direction);
+    };
+
+    const onTouchEnd = () => {
+      touchStartY = null;
+      touchCaptured = false;
+    };
+
+    const onKeyDown = (event) => {
+      const direction = ['ArrowDown', 'PageDown'].includes(event.key) ? 1 : ['ArrowUp', 'PageUp'].includes(event.key) ? -1 : 0;
+      if (!direction || !canMove(direction)) return;
+      event.preventDefault();
+      move(direction);
+    };
+
+    section.addEventListener('wheel', onWheel, { passive: false });
+    section.addEventListener('touchstart', onTouchStart, { passive: true });
+    section.addEventListener('touchmove', onTouchMove, { passive: false });
+    section.addEventListener('touchend', onTouchEnd, { passive: true });
+    section.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    section.addEventListener('keydown', onKeyDown);
     return () => {
-      window.removeEventListener('scroll', updateFromScroll);
-      window.removeEventListener('resize', updateFromScroll);
+      window.clearTimeout(wheelTimer);
+      section.removeEventListener('wheel', onWheel);
+      section.removeEventListener('touchstart', onTouchStart);
+      section.removeEventListener('touchmove', onTouchMove);
+      section.removeEventListener('touchend', onTouchEnd);
+      section.removeEventListener('touchcancel', onTouchEnd);
+      section.removeEventListener('keydown', onKeyDown);
     };
   }, []);
 
   const selectBelt = (index) => {
+    activeBeltRef.current = index;
     setActiveBelt(index);
-    if (!sectionRef.current) return;
-    const top = sectionRef.current.offsetTop;
-    const travel = sectionRef.current.offsetHeight - window.innerHeight;
-    window.scrollTo({ top: top + (travel * index / (beltLevels.length - 1)), behavior: 'smooth' });
   };
 
   return (
-    <section className="belt-journey" ref={sectionRef} aria-label="Progresión de cinturones de Brazilian Jiu Jitsu">
+    <section className="belt-journey" ref={sectionRef} tabIndex="0" aria-label="Progresión interactiva de cinturones de Brazilian Jiu Jitsu. Usa la rueda, desliza o utiliza las flechas para avanzar.">
       <div className="belt-journey-sticky page-pad">
         <div className="belt-copy">
           <p className="kicker"><span /> Tu progreso se construye</p>
           <p className="belt-step">Cinturón {String(activeBelt + 1).padStart(2, '0')} / {String(beltLevels.length).padStart(2, '0')}</p>
+          <p className="belt-scroll-hint">Un gesto · un cinturón</p>
           <h2>Un camino.<br /><em>Cinco etapas.</em></h2>
           <div className="belt-active-copy" aria-live="polite">
             <strong>{beltLevels[activeBelt].name}</strong>

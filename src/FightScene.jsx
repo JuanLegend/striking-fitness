@@ -106,8 +106,8 @@ export default function FightScene({ sectionRef }) {
     const rect = sectionRef.current.getBoundingClientRect();
     const scrollable = Math.max(1, rect.height - window.innerHeight);
     const isMobile = window.innerWidth <= 600;
-    const progress = clamp((-rect.top / scrollable) * (isMobile ? 1.28 : 1));
-    progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 6, delta);
+    const progress = clamp((-rect.top / scrollable) * (isMobile ? 1.45 : 1.22));
+    progressRef.current = THREE.MathUtils.damp(progressRef.current, progress, 10, delta);
     const p = progressRef.current;
 
     const entrance = smooth(range(p, 0, isMobile ? 0.22 : 0.32));
